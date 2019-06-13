@@ -153,7 +153,6 @@ void addpath(vector<Vertex*> &odd_node,vector<vector<int>> &map)
 
 */
 
-
 void dikjstra(int source, int node_size,vector<vector<int>> &map,int parent[],bool visit[],int d[])
 {
     cout<<" in dikjstra"<<endl;
