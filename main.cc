@@ -8,16 +8,17 @@
 #include "gplot.h"
 #include "path.h"
 
-
+#define INPUT "topo3" //define input file
 using namespace std;
 
 // create NetworkManager first
 NetworkManager *nm = new NetworkManager();
-deque<pair<int,int> >edges;
 
-void findcircuit(int x,int node_size,vector<vector<int>> &map,int walking_dis);
+deque<pair<int,int> >edges;//for euler
+
+void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num);
 void dikjstra(int source,int node_size,vector<vector<int>> &map,int parent[],bool visit[],int d[]);
-void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<int>> &map); 
+void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<int>> &map,int &edge_num); 
 int main(int argc, char** argv){
     
     Vertex *node;
@@ -25,11 +26,12 @@ int main(int argc, char** argv){
  //   vector<Vertex*> odd_node;
     vector<int> record_odd;
     int *begin;
-    int walking_dis=0;
+    int edge_num=0;
 
    // build basic topo
-    nm->interpret("topo.txt");
+    nm->interpret(INPUT".txt");
     node = nm->get_all_nodes();
+
     while(node!=0){
         node_name.push_back(node);
         node=node->next;
@@ -54,6 +56,7 @@ int main(int argc, char** argv){
             if(nm->connected(node_name[i]->name,node_name[j]->name)==0){
                 degree[i]++;
                 degree[j]++;
+
             }
         }
 //---------------------2. find odd degree---------------------//
@@ -87,6 +90,7 @@ int main(int argc, char** argv){
             if(nm->connected(node_name[i]->name,node_name[j]->name)==0){
                 map[i][j]++;
                 map[j][i]++;
+                edge_num++;
             }
         }
     }
@@ -103,7 +107,7 @@ int main(int argc, char** argv){
         cout<<endl<<"-----------"<<endl;
         cout<<" add new path of two odds : " <<node_name[record_odd[x]]->name<<"   "<<node_name[record_odd[x+1]]->name <<endl;
         dikjstra(record_odd[x],node_name.size(),map,parent,visit,d);
-        addpath(record_odd[x+1],node_name,parent,map);
+        addpath(record_odd[x+1],node_name,parent,map,edge_num);
     }
 //---------------------------print new map------------------------------------//
     cout<<"------------------------------- I AM NEW MAP ---------------------------------"<<endl;
@@ -115,14 +119,20 @@ int main(int argc, char** argv){
     }
 //-----------------------  5. find euler path-------------------------------//
     cout<<"begin = "<<*begin<<endl;
-    findcircuit(*begin,node_name.size(),map,walking_dis);
+    findcircuit(*begin,node_name.size(),map,edge_num);
         cout<<" path ="<<endl;
     for(int i=0;i<edges.size();i++)
-        cout<< edges[i].first<< "-----"<<edges[i].second<<endl;
+        cout<< node_name[edges[i].first]->name<< "-----"<<node_name[edges[i].second]->name<<endl;
 
-    cout<<"walking distance=  "<<walking_dis<<endl;
-
-
+    cout<<"walking distance=  "<<edges.size()<<endl;
+    cout<<"edge num=  "<<edge_num<<endl;
+    cout<<"------------------------------- FINAL MAP ---------------------------------"<<endl;
+    for(int i=0;i<node_name.size();i++){     
+        for(int j=0;j<node_name.size();j++) {
+            cout<<"map ["<<i<<"] ["<<j<<"]= "<<map[i][j]<<"  ";
+            if(j==node_name.size()-1) cout<<endl;
+        }
+    }
     // using gplot to export a dot file, and then using graphviz to generate the figure
     Gplot *gp = new Gplot();
     gp->gp_add(nm->elist);
@@ -133,7 +143,7 @@ int main(int argc, char** argv){
 }
 //---------------------------other functions-------------------------------//
 
-void findcircuit(int x,int node_size,vector<vector<int>> &map,int walking_dis)
+void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num)
 {
     for(int y=0;y<node_size;y++){
         if(map[x][y]>0)
@@ -143,26 +153,39 @@ void findcircuit(int x,int node_size,vector<vector<int>> &map,int walking_dis)
             {
                 map[y][x]--;
                 edges.push_back(make_pair(x,y));
-            //    walking_dis++;
-                findcircuit(y,node_size,map,walking_dis);
+                cout<<"make -------"<<x<<" and  "<<y<<endl;
+                findcircuit(y,node_size,map,edge_num);
 
             }
-           
-            break;
+            cout<<"find distance = "<<edges.size()<<endl;
+
+            if(edges.size()!=edge_num)
+            {
+                cout<<"deal -------"<<x<<" and  "<<y<<endl;
+                map[y][x]++;
+                map[x][y]++;
+                edges.pop_back();                    
+            }             
+            else
+                break;
         }
 
- //   cout<<"walking distance  2=  "<<walking_dis<<endl;
     }
+
+ 
 }
 
-void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<int>> &map)
+void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<int>> &map,int &edge_num)
 {
     if(source2!=parent[source2])
     {
-        addpath(parent[source2],node_name,parent,map);
+        addpath(parent[source2],node_name,parent,map,edge_num);
         nm->connect(node_name[source2]->name,node_name[parent[source2]]->name);
         cout<<" add path "<< node_name[source2]->name<<"-----"<<node_name[parent[source2]]->name<<endl;
         map[source2][parent[source2]]++;
+        map[parent[source2]][source2]++;
+        edge_num++;
+
   
     }
 }
