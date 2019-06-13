@@ -2,4 +2,6 @@ a b
 b c
 c d
 d e
-e a
+e b
+e c
+a b

@@ -8,9 +8,9 @@
 #include "gplot.h"
 #include "path.h"
 
-#define INPUT "topo3" //define input file
+#define INPUT "topo" //define input file
 using namespace std;
-
+  
 // create NetworkManager first
 NetworkManager *nm = new NetworkManager();
 
@@ -35,7 +35,6 @@ int main(int argc, char** argv){
     while(node!=0){
         node_name.push_back(node);
         node=node->next;
-        cout<<"node = "<<node_name[0]->name<<endl;
     }
 
     int *degree;
@@ -47,7 +46,6 @@ int main(int argc, char** argv){
 //-------------------------------//
 
     cout<<"node_name size= "<<node_name.size()<<endl;
-
 //----------------------1. count degree-----------------------//
     for(int i=0;i<node_name.size();i++)
         degree[i]=0;
@@ -56,10 +54,11 @@ int main(int argc, char** argv){
             if(nm->connected(node_name[i]->name,node_name[j]->name)==0){
                 degree[i]++;
                 degree[j]++;
-
             }
         }
+    }
 //---------------------2. find odd degree---------------------//
+    for(int i=0;i<node_name.size();i++){
         if(degree[i]%2==1){
            // odd_node.push_back(node_name[i]); 
             record_odd.push_back(i);
@@ -94,7 +93,7 @@ int main(int argc, char** argv){
             }
         }
     }
-
+    cout<<"--------------------------------- INITIAL MAP --------------------------------"<<endl;
     for(int i=0;i<node_name.size();i++){     
         for(int j=0;j<node_name.size();j++) {
             cout<<"map ["<<i<<"] ["<<j<<"]= "<<map[i][j]<<"  ";
@@ -118,15 +117,15 @@ int main(int argc, char** argv){
         }
     }
 //-----------------------  5. find euler path-------------------------------//
-    cout<<"begin = "<<*begin<<endl;
+    cout<<endl<<"begin = "<<node_name[*begin]->name<<endl;
     findcircuit(*begin,node_name.size(),map,edge_num);
-        cout<<" path ="<<endl;
+        cout<<"path ="<<endl;
     for(int i=0;i<edges.size();i++)
         cout<< node_name[edges[i].first]->name<< "-----"<<node_name[edges[i].second]->name<<endl;
 
     cout<<"walking distance=  "<<edges.size()<<endl;
     cout<<"edge num=  "<<edge_num<<endl;
-    cout<<"------------------------------- FINAL MAP ---------------------------------"<<endl;
+    cout<<"------------------------------- FINAL CLEAR MAP --------------------------------"<<endl;
     for(int i=0;i<node_name.size();i++){     
         for(int j=0;j<node_name.size();j++) {
             cout<<"map ["<<i<<"] ["<<j<<"]= "<<map[i][j]<<"  ";
@@ -153,15 +152,14 @@ void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num)
             {
                 map[y][x]--;
                 edges.push_back(make_pair(x,y));
-                cout<<"make -------"<<x<<" and  "<<y<<endl;
+              //  cout<<"make -------"<<x<<" and  "<<y<<endl;
                 findcircuit(y,node_size,map,edge_num);
-
             }
-            cout<<"find distance = "<<edges.size()<<endl;
+           // cout<<"find distance = "<<edges.size()<<endl;
 
             if(edges.size()!=edge_num)
             {
-                cout<<"deal -------"<<x<<" and  "<<y<<endl;
+              //  cout<<"deal -------"<<x<<" and  "<<y<<endl;
                 map[y][x]++;
                 map[x][y]++;
                 edges.pop_back();                    
@@ -169,10 +167,7 @@ void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num)
             else
                 break;
         }
-
     }
-
- 
 }
 
 void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<int>> &map,int &edge_num)
@@ -192,16 +187,14 @@ void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<in
 
 void dikjstra(int source, int node_size,vector<vector<int>> &map,int parent[],bool visit[],int d[])
 {
-    cout<<" in dikjstra"<<endl;
+  //  cout<<" in dikjstra"<<endl;
     for(int i=0;i<node_size;i++) {
         visit[i]=false;
         parent[i]=0;
         d[i]=1000;
     }
-    queue<int> q;
     d[source]=0;
     parent[source]=source;
-    q.push(source);
     for(int i=0;i<node_size;i++) {
         int a=-1;
         int b=-1;
@@ -215,30 +208,23 @@ void dikjstra(int source, int node_size,vector<vector<int>> &map,int parent[],bo
                 min=d[i];
             }
         }
-    if(a==-1)
-        break;//finish connecting
-    visit[a]=true;
+        if(a==-1)
+          break;//finish connecting
+        visit[a]=true;
 
-    for(b=0;b<node_size;b++){
+        for(b=0;b<node_size;b++){
             //cout<<"in for "<<endl; 
             //cout<<"visit[ "<<b<<"]="<<visit[b]<<endl;
           //  cout<<"d ["<<b<<"]  = "<<d[b]<<endl;
          //   cout<<"d[a]+map["<<a<<"]["<<b<<"] = "<<d[a]+map[a][b]<<endl; 
-        if(visit[b]==false && d[a]+map[a][b]<d[b] && map[a][b]!=0)
-        {
-            /*if(d[b]!=1000)
-                q.pop();*/
-            d[b]=d[a]+map[a][b];
-            parent[b]=a;
-           // q.push(b);
-            
-            cout<<"parent ["<<b<<"] = "<<parent[b]<<endl; 
+            if(visit[b]==false && d[a]+map[a][b]<d[b] && map[a][b]!=0)
+            {
+                d[b]=d[a]+map[a][b];
+                parent[b]=a;
+             
+                //cout<<"parent ["<<b<<"] = "<<parent[b]<<endl; 
+            }
         }
-    }
-    } 
-        while(q.size()!=0) {
-        cout<<"q front ="<<q.front()<<endl;
-        q.pop();
     }       
         
 }
