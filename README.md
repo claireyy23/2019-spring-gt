@@ -49,7 +49,7 @@
    在使用這個function前提是已經由 dikjstra 找到最短路徑。從終點不斷往回搜尋到起點，同時將這一路上經過的路徑加一條edge
 * findcircuit
 
-   當新的edge都添加完畢後，便尋找如何經過所有edge的路線。先搜尋與該vertex相連的edges，與其中之一相連，刪去 `map`的對應位置並遞迴搜尋，直到終點vertex沒有edge可以相連為止。經由比較行走距離是否和`node_name`中的edges數量相等，若不相等，則代表此路徑並非完整走過每條edge，因此將重新搜尋，直到相等
+   當新的edge都添加完畢後，便尋找如何經過所有edge的路線。先搜尋與該vertex相連的edges，與其中之一相連，刪去 `map`的對應位置，存進`edges`並遞迴搜尋，直到終點vertex沒有edge可以相連為止。經由比較行走距離是否和`node_name`中的edges數量相等，若不相等，則代表此路徑並非完整走過每條edge，因此將重新搜尋，直到相等
 
 ## 執行結果
 * 輸入檔案topo.txt
