@@ -10,8 +10,8 @@
 #include "gplot.h"
 #include "path.h"
 
-#define INPUT "topo3" //define input file
-#define OUTPUT "postman_path3" //define input file
+#define INPUT "topo2" //define input file
+#define OUTPUT "x" //define output file
 using namespace std;
   
 // create NetworkManager first
@@ -19,6 +19,7 @@ NetworkManager *nm = new NetworkManager();
 
 deque<pair<int,int> >edges;//for euler
 
+void connect(int x,int node_size,bool connected[],vector<vector<int>> &map);
 void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num);
 void dikjstra(int source,int node_size,vector<vector<int>> &map,int parent[],bool visit[],int d[]);
 void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<int>> &map,int &edge_num); 
@@ -41,8 +42,8 @@ int main(int argc, char** argv){
     }
     delete node;
 
-    int *degree;
-    degree= new int[node_name.size()];
+    int *degree = new int[node_name.size()];
+    bool *connected = new bool[node_name.size()];
 //-----------dikjstra------------//
     int *parent = new int[node_name.size()];
     int *d = new int[node_name.size()];
@@ -96,13 +97,30 @@ int main(int argc, char** argv){
         }
     }
     cout<<"--------------------------------- INITIAL MAP --------------------------------"<<endl;
-    for(int i=0;i<node_name.size();i++){     
-        for(int j=0;j<node_name.size();j++) {
+    for(int i=0;i<node_name.size();i++)
+    {     
+        for(int j=0;j<node_name.size();j++) 
+        {
             cout<<"map ["<<i<<"] ["<<j<<"]= "<<map[i][j]<<"  ";
             if(j==node_name.size()-1) cout<<endl;
         }
     }
-//--------------------- 4. if odd node >=2, add path-----------------------//
+//--------------------- 4. check connected or not-----------------------//
+    for(int i=0;i<node_name.size();i++)
+        connected[i]=false;
+     connect(0,node_name.size(),connected,map);
+    for(int i=1;i<node_name.size();i++)
+    {
+        if(connected[i]==false)
+        {
+            cout<<" ======================== oops!!! ==========================="<<endl;
+            cout<<"                 This graph is not connected      "<<endl;
+            cout<<"             postman can't arrive somewhere T^T "<<endl;
+            cout<<" ============================================================"<<endl;
+            return 0;
+        }
+    }
+//--------------------- 5. if odd node >=2, add path-----------------------//
 //check dikjstra
     for(int x=0;x<record_odd.size();x=x+2){
         cout<<endl<<"-----------"<<endl;
@@ -118,7 +136,7 @@ int main(int argc, char** argv){
             if(j==node_name.size()-1) cout<<endl;
         }
     }
-//-----------------------  5. find euler path-------------------------------//
+//-----------------------  6. find euler path-------------------------------//
     ofstream file;
     file.open(OUTPUT".txt");
     cout<<endl<<"begin = "<<node_name[*begin]->name<<endl;
@@ -134,7 +152,7 @@ int main(int argc, char** argv){
         file<< "\n";
     }
         
-    cout<<"            walking distance=  "<<edges.size()<<endl;
+    cout<<"          walking distance=  "<<edges.size()<<endl;
    // cout<<"edge num=  "<<edge_num<<endl;
     cout<<"------------------------------- FINAL CLEAR MAP --------------------------------"<<endl;
     for(int i=0;i<node_name.size();i++){     
@@ -153,6 +171,17 @@ int main(int argc, char** argv){
     return 0;
 }
 //---------------------------other functions-------------------------------//
+void connect(int x,int node_size,bool connected[],vector<vector<int>> &map)
+{
+    for(int i=x;i<node_size;i++)
+    {
+        if(map[x][i])
+        {
+            connected[i]=true;
+            connect(i,node_size,connected,map);
+        }
+    }
+}
 
 void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num)
 {
@@ -160,15 +189,11 @@ void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num)
         if(map[x][y]>0)
         {
             map[x][y]--;
-            if(x!=y) 
-            {
-                map[y][x]--;
-                edges.push_back(make_pair(x,y));
-              //  cout<<"make -------"<<x<<" and  "<<y<<endl;
-                findcircuit(y,node_size,map,edge_num);
-            }
+            map[y][x]--;
+            edges.push_back(make_pair(x,y));
+          //  cout<<"make -------"<<x<<" and  "<<y<<endl;
+            findcircuit(y,node_size,map,edge_num);
            // cout<<"find distance = "<<edges.size()<<endl;
-
             if(edges.size()!=edge_num)
             {
               //  cout<<"deal -------"<<x<<" and  "<<y<<endl;
