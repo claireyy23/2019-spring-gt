@@ -10,14 +10,14 @@
 #include "gplot.h"
 #include "path.h"
 
-#define INPUT "topo2" //define input file
-#define OUTPUT "x" //define output file
+#define INPUT "topo" //define input file
+#define OUTPUT "postman_path" //define output file
 using namespace std;
   
 // create NetworkManager first
 NetworkManager *nm = new NetworkManager();
 
-deque<pair<int,int> >edges;//for euler
+deque<pair<int,int> >edges;//for finding path
 
 void connect(int x,int node_size,bool connected[],vector<vector<int>> &map);
 void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num);
@@ -216,9 +216,7 @@ void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<in
         cout<<" add path "<< node_name[source2]->name<<"-----"<<node_name[parent[source2]]->name<<endl;
         map[source2][parent[source2]]++;
         map[parent[source2]][source2]++;
-        edge_num++;
-
-  
+        edge_num++; 
     }
 }
 
@@ -257,13 +255,11 @@ void dikjstra(int source, int node_size,vector<vector<int>> &map,int parent[],bo
             if(visit[b]==false && d[a]+map[a][b]<d[b] && map[a][b]!=0)
             {
                 d[b]=d[a]+map[a][b];
-                parent[b]=a;
-             
+                parent[b]=a;             
                 //cout<<"parent ["<<b<<"] = "<<parent[b]<<endl; 
             }
         }
     }               
 }
-
 
 
