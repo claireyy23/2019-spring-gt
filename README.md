@@ -43,3 +43,5 @@
    當新的edge都添加完畢後，便訓找如何經過所有的edge的路線。先搜尋與該vertex相連的edges，與其中之一相聯並遞迴搜尋，直到終點vertex沒有edge可以相連為止。經由比較行走距離是否和node_name中的edges相等，若不相等，則代表此路徑並非完整走過每條edge，因此將重新搜尋，直到相等
 
 ## 執行結果
+輸入檔案
+[!image](https://github.com/claireyy23/graph_theory/blob/master/%E6%8A%95%E5%BD%B1%E7%89%871.JPG)
