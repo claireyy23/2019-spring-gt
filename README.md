@@ -70,15 +70,15 @@
       
    4. 更新adjacent matrix
    
-      ![image]https://github.com/claireyy23/graph_theory/blob/master/terminal_newmap.JPG)
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_newmap.JPG)
       
    5. 輸出path
    
-      ![image]https://github.com/claireyy23/graph_theory/blob/master/terminal_path.JPG)
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_path.JPG)
       
    6. 清空後的adjacent matrix
    
-      ![image]https://github.com/claireyy23/graph_theory/blob/master/terminal_finalmap.JPG)
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_finalmap.JPG)
       
       
       
