@@ -34,7 +34,7 @@
    2. 尋找odd vertex並記錄，同時選擇一vertex為起點
    3. 為了要尋找最短路徑，使用Dijkstra's Algorithm，因此建立adjacent matrix `map`，同時記錄edge的個數 **(使用函式dikjstra)**
    4. 利用 `map`，判斷此圖是否為connected graph，若不是，則結束程式 **(使用函式connect)**
-   5. 如果是odd vertex，則利用Dijkstra's Algorithm尋找兩兩odd vertex的最短路徑，並將此路徑connect於`node_name`。同時更新adjacent matrix以及edge的個數 **(使用函式addpath)**
+   5. 如果是odd vertex，則利用Dijkstra's Algorithm尋找兩兩odd vertex的最短路徑，並將此路徑connect於`node_name`。同時更新`map`以及edge的個數 **(使用函式addpath)**
    6. 尋找郵差路徑。現在所有vertex的degree都是偶數，因此一定是Euler Circuit，只要比對edge的個數以及行走路徑的距離是否一樣，便能確定是否每條edge都走過，走過的路徑會在`map`扣除，最後清空`map`  **(使用函式findcircuit)**
    
 ## 函式解釋
@@ -91,7 +91,7 @@
       
  * 輸入unconnected圖形
  
- ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_not%20connect.JPG)
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_not%20connect.JPG)
       
       
       
