@@ -3,7 +3,7 @@
 ## How to run
 * Input files 
     * ex: topo.txt
-*Linux
+* Linux
     ```
     $ make 
     $ ./main.out
