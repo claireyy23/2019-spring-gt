@@ -1,3 +1,5 @@
+#include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <iostream>
 #include <unistd.h>
@@ -9,6 +11,7 @@
 #include "path.h"
 
 #define INPUT "topo" //define input file
+#define OUTPUT "postman_path" //define input file
 using namespace std;
   
 // create NetworkManager first
@@ -19,16 +22,16 @@ deque<pair<int,int> >edges;//for euler
 void findcircuit(int x,int node_size,vector<vector<int>> &map,int edge_num);
 void dikjstra(int source,int node_size,vector<vector<int>> &map,int parent[],bool visit[],int d[]);
 void addpath(int source2,vector<Vertex*>&node_name,int parent[],vector<vector<int>> &map,int &edge_num); 
+
 int main(int argc, char** argv){
-    
-    Vertex *node;
+
+    Vertex* node=NULL;
     vector<Vertex*> node_name;
- //   vector<Vertex*> odd_node;
     vector<int> record_odd;
-    int *begin;
+    int *begin=new int;
     int edge_num=0;
 
-   // build basic topo
+   // build topo
     nm->interpret(INPUT".txt");
     node = nm->get_all_nodes();
 
@@ -36,6 +39,7 @@ int main(int argc, char** argv){
         node_name.push_back(node);
         node=node->next;
     }
+    delete node;
 
     int *degree;
     degree= new int[node_name.size()];
@@ -70,11 +74,7 @@ int main(int argc, char** argv){
 
     for(int x=0;x<node_name.size();x++)
         cout<<"degree ["<<node_name[x]->name<<"] = "<<degree[x]<<endl; 
-  /*  cout<<"odd nodes = "<<odd_node.size()<<" : ";
-    for(int x=0;x<odd_node.size();x++)
-        cout<<odd_node[x]->name<<"  "; 
-    cout<<endl;*/
-    cout<<"record odds = "<<record_odd.size()<<" : ";
+        cout<<"record odds = "<<record_odd.size()<<" : ";
     for(int x=0;x<record_odd.size();x++)
         cout<<node_name[record_odd[x]]->name<<"  "; 
     cout<<endl;
@@ -117,14 +117,23 @@ int main(int argc, char** argv){
         }
     }
 //-----------------------  5. find euler path-------------------------------//
+    ofstream file;
+    file.open(OUTPUT".txt");
     cout<<endl<<"begin = "<<node_name[*begin]->name<<endl;
     findcircuit(*begin,node_name.size(),map,edge_num);
-        cout<<"path ="<<endl;
-    for(int i=0;i<edges.size();i++)
-        cout<< node_name[edges[i].first]->name<< "-----"<<node_name[edges[i].second]->name<<endl;
-
-    cout<<"walking distance=  "<<edges.size()<<endl;
-    cout<<"edge num=  "<<edge_num<<endl;
+        cout<<"###################################### "<<endl;
+        cout<<" < CHINESE POST MAN WALKING PATH > "<<endl;
+        cout<<"###################################### "<<endl;
+    for(int i=0;i<edges.size();i++){
+        cout<< "              "<<node_name[edges[i].first]->name<< "-----"<<node_name[edges[i].second]->name<<endl;
+        file<< node_name[edges[i].first]->name;
+        file<< "---";
+        file<< node_name[edges[i].second]->name;
+        file<< "\n";
+    }
+        
+    cout<<"            walking distance=  "<<edges.size()<<endl;
+   // cout<<"edge num=  "<<edge_num<<endl;
     cout<<"------------------------------- FINAL CLEAR MAP --------------------------------"<<endl;
     for(int i=0;i<node_name.size();i++){     
         for(int j=0;j<node_name.size();j++) {
@@ -132,6 +141,8 @@ int main(int argc, char** argv){
             if(j==node_name.size()-1) cout<<endl;
         }
     }
+    
+    file.close();
     // using gplot to export a dot file, and then using graphviz to generate the figure
     Gplot *gp = new Gplot();
     gp->gp_add(nm->elist);
