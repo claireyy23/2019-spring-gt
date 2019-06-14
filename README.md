@@ -27,7 +27,11 @@
 ## 程式碼實作
    1. 將拓樸輸入node_name後，計算此圖形每個vertex的degree
    2. 尋找odd vertex並記錄，同時選擇一vertex為起點
+   
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_vertex.JPG)
    3. 為了要尋找最短路徑，使用Dijkstra's Algorithm，因此建立adjacent matrix，同時記錄edge的個數
+   
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_inimap.JPG)
    4. 如果是odd vertex，則利用Dijkstra's Algorithm尋找兩兩odd vertex的最短路徑，並將此路徑connect於node_name。同時更新adjacent matrix以及edge的個數
    5. 尋找郵差路徑。現在所有vertex的degree都是偶數，因此一定是Euler Circuit，只要比對edge的個數以及行走路徑的距離是否一樣，便能確定是否每條edge都走過。
    
@@ -44,8 +48,8 @@
 
 ## 執行結果
 * 輸入檔案topo.txt
+   圖形表示：
 
-![image](https://github.com/claireyy23/graph_theory/blob/master/txt_in.JPG)(https://github.com/claireyy23/graph_theory/blob/master/%E6%8A%95%E5%BD%B1%E7%89%871.JPG)
 ![image](https://github.com/claireyy23/graph_theory/blob/master/%E6%8A%95%E5%BD%B1%E7%89%871.JPG)
 * 輸出檔案
    * postman_path.txt
@@ -57,5 +61,5 @@
 * 終端機
    1. 計算vertex個數、搜尋每個vertex的degree、紀錄odd degree
    
-      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_vertex.JPG)
+
    2.
