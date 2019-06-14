@@ -27,7 +27,7 @@
    1. 確認圖是否connected
    2. 找出圖上所有odd vertex
    3. 將odd vertex以最短路徑兩兩相連，使全部的vertex為even vertex
-   4. 利用更新的地圖找中國郵差路徑
+   4. 更新的地圖已為Euler circuit，尋找走遍每個edge的路徑
         
 ## 程式碼實作
    1. 將拓樸輸入`node_name`後，計算此圖形每個vertex的degree
