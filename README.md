@@ -1,27 +1,27 @@
-# test from windows
-# Graph-Theory-Project-Template
-Project template of course - Graph Theory (EE6622E) in National Cheng Kung University.
+# CHINESE POSTAN PROBLEM
 
 ## How to run
 
-### Linux
+### Input files 
+* ex: topo.txt
 
+### Linux
 ```
-# clone first (with submodule)
-$ git clone --recursive https://github.com/<your-name>/Graph-Theory-Project-Template.git
-# (Option) build libfakemn.a
-$ cd fake-mininet && make lib && cd .. && cp fake-mininet/libfakemn.a .
-# build
 $ make 
-# run 
 $ ./main.out
 ```
 
-### Windows
+### Output files
+* .dot (plot.dot in default)
+* .txt (postman_path.txt in default)
 
-If your PC is `window 10`, then you need to install the related dependencies. For example, if you are using `VSCode` as your IDE, then you can install the plugin of `C/C++` in your vscode. And then install the following programs/packages:
-* mingw
-* git
+### Modify files
+可以在 main.cc 的define中修改輸入/輸出.txt檔之檔名
+```
+#define INPUT "topo"
+#define OUTPUT "postman_path"
+```
+
 
 Step by step to create `c_cpp_properties.json` and `tasks.json`:
 * `Ctrl+Shift+P` -> `C/C++: Edit Configuration` -> then you have the first JSON file.
