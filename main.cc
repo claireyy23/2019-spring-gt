@@ -10,8 +10,8 @@
 #include "gplot.h"
 #include "path.h"
 
-#define INPUT "topo" //define input file
-#define OUTPUT "postman_path" //define input file
+#define INPUT "topo3" //define input file
+#define OUTPUT "postman_path3" //define input file
 using namespace std;
   
 // create NetworkManager first
@@ -50,6 +50,7 @@ int main(int argc, char** argv){
 //-------------------------------//
 
     cout<<"node_name size= "<<node_name.size()<<endl;
+
 //----------------------1. count degree-----------------------//
     for(int i=0;i<node_name.size();i++)
         degree[i]=0;
@@ -62,6 +63,7 @@ int main(int argc, char** argv){
         }
     }
 //---------------------2. find odd degree---------------------//
+    *begin=1001;
     for(int i=0;i<node_name.size();i++){
         if(degree[i]%2==1){
            // odd_node.push_back(node_name[i]); 
@@ -140,8 +142,7 @@ int main(int argc, char** argv){
             cout<<"map ["<<i<<"] ["<<j<<"]= "<<map[i][j]<<"  ";
             if(j==node_name.size()-1) cout<<endl;
         }
-    }
-    
+    }   
     file.close();
     // using gplot to export a dot file, and then using graphviz to generate the figure
     Gplot *gp = new Gplot();
@@ -236,8 +237,7 @@ void dikjstra(int source, int node_size,vector<vector<int>> &map,int parent[],bo
                 //cout<<"parent ["<<b<<"] = "<<parent[b]<<endl; 
             }
         }
-    }       
-        
+    }               
 }
 
 
