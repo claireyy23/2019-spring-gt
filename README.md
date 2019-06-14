@@ -60,7 +60,7 @@
    * postman_path.txt
    
       ![image](https://github.com/claireyy23/graph_theory/blob/master/txt%E8%BC%B8%E5%87%BA.JPG)
-   * path.dot轉成png檔
+   * path.dot轉成png檔 (視為無向)
    
       ![image](https://github.com/claireyy23/graph_theory/blob/master/%E6%8A%95%E5%BD%B1%E7%89%872.JPG)
       
