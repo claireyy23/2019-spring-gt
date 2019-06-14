@@ -91,7 +91,7 @@
       
  * 輸入unconnected圖形
  
-        ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_not%20connect.JPG)
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_not%20connect.JPG)
       
       
       
