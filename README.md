@@ -54,22 +54,28 @@
    * path.dot轉成png檔
    
       ![image](https://github.com/claireyy23/graph_theory/blob/master/%E6%8A%95%E5%BD%B1%E7%89%872.JPG)
+      
 * 終端機
    1. 計算vertex個數、搜尋每個vertex的degree、紀錄odd degree
-         ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_vertex.JPG)
-
+   
+      ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_vertex.JPG)
+      
    2. 建立adjacent matrix  
+   
       ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_inimap.JPG)
       
    3. 將odd vertex依照最短路徑連edges
    
       ![image](https://github.com/claireyy23/graph_theory/blob/master/terminal_addpath.JPG)
+      
    4. 更新adjacent matrix
    
       ![image]https://github.com/claireyy23/graph_theory/blob/master/terminal_newmap.JPG)
+      
    5. 輸出path
    
       ![image]https://github.com/claireyy23/graph_theory/blob/master/terminal_path.JPG)
+      
    6. 清空後的adjacent matrix
    
       ![image]https://github.com/claireyy23/graph_theory/blob/master/terminal_finalmap.JPG)
