@@ -27,11 +27,11 @@
 ## 程式碼實作
    1. 將拓樸輸入node_name後，計算此圖形每個vertex的degree
    2. 尋找odd vertex並記錄，同時選擇一vertex為起點
-   3. 為了要尋找最短路徑，使用Dijkstra's Algorithm，因此建立adjacent matrix，同時記錄edge的個數 **(使用函數dikjstra)**
-   4. 如果是odd vertex，則利用Dijkstra's Algorithm尋找兩兩odd vertex的最短路徑，並將此路徑connect於node_name。同時更新adjacent matrix以及edge的個數 **(使用函數addpath)**
-   5. 尋找郵差路徑。現在所有vertex的degree都是偶數，因此一定是Euler Circuit，只要比對edge的個數以及行走路徑的距離是否一樣，便能確定是否每條edge都走過，走過的路徑會在adjacent map扣除，最後清空adjacent map。 **(使用函數findcircuit)**
+   3. 為了要尋找最短路徑，使用Dijkstra's Algorithm，因此建立adjacent matrix，同時記錄edge的個數 **(使用函式dikjstra)**
+   4. 如果是odd vertex，則利用Dijkstra's Algorithm尋找兩兩odd vertex的最短路徑，並將此路徑connect於node_name。同時更新adjacent matrix以及edge的個數 **(使用函式addpath)**
+   5. 尋找郵差路徑。現在所有vertex的degree都是偶數，因此一定是Euler Circuit，只要比對edge的個數以及行走路徑的距離是否一樣，便能確定是否每條edge都走過，走過的路徑會在adjacent map扣除，最後清空adjacent map。 **(使用函式findcircuit)**
    
-## 函數解釋
+## 函式解釋
 * dikjstra
 
    此演算法為求兩點之最短路徑。利用adjacent matrix從指定起點開始搜尋，如果有發現更短的路徑，便會更新目前路徑，最後可以導出每一點與起點的最短路徑關係。
