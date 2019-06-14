@@ -45,7 +45,7 @@
 ## 執行結果
 * 輸入檔案topo.txt
 
-![image](https://github.com/claireyy23/graph_theory/blob/master/txt_in.JPG)
+![image](https://github.com/claireyy23/graph_theory/blob/master/txt_in.JPG)(https://github.com/claireyy23/graph_theory/blob/master/%E6%8A%95%E5%BD%B1%E7%89%871.JPG)
 ![image](https://github.com/claireyy23/graph_theory/blob/master/%E6%8A%95%E5%BD%B1%E7%89%871.JPG)
 * 輸出檔案
    * postman_path.txt
