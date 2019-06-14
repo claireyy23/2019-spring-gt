@@ -1,4 +1,4 @@
-# CHINESE POSTAN PROBLEM 
+# CHINESE POSTMAN PROBLEM 
 
 ## How to run
 本次作業為解連通、無向，無權重之圖形
